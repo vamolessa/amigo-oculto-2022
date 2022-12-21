@@ -67,4 +67,4 @@ endlocal & set INCLUDE=%INCLUDE% & set LIB=%LIB%
 
 set CL_BIN="%msvc_tools_dir%\bin\HostX64\%CL_TARGET%\cl.exe"
 
-%CL_BIN% main.c
+%CL_BIN% /nologo /utf-8 /std:c17 /WX /Wall /wd4127 /wd4201 /wd4710 /wd4711 /wd5045 main.c /link /SUBSYSTEM:windows user32.lib
