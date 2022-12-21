@@ -15,7 +15,8 @@ window_proc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
     switch (uMsg) {
         case WM_CREATE: {
-            //avatar_bitmap = LoadBitmapW(GetModuleHandle(NULL), MAKEINTRESOURCE(IDB_BALL));
+            //avatar_bitmap = LoadBitmapW(GetModuleHandle(NULL), MAKEINTRESOURCEW(IDB_BALL));
+            avatar_bitmap = LoadBitmapA(GetModuleHandle(NULL), (const char*)OBM_CHECK);
             if (!avatar_bitmap) {
                 error_dialog("could not load avatar bitmap");
             }

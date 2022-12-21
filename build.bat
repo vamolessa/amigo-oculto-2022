@@ -56,6 +56,14 @@ if not defined wsdk_lib_dir (
     exit /b
 )
 
+if not defined wsdk_bin_dir (
+    for /d %%d in ("%wsdk_dir%\Bin\*") do if exist "%%d\%CL_TARGET%" set wsdk_bin_dir=%%d\%CL_TARGET%
+)
+if not defined wsdk_bin_dir (
+    echo could not find windows sdk bin dir. set `wsdk_bin_dir` env var
+    exit /b
+)
+
 setlocal EnableDelayedExpansion
 
 set INCLUDE=%msvc_tools_dir%\include
