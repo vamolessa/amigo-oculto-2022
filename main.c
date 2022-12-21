@@ -15,13 +15,18 @@ window_proc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     return 0;
 }
 
+static void
+error_dialog(const char* error_message) {
+    MessageBoxA(NULL, error_message, "error", MB_ICONEXCLAMATION | MB_OK);
+}
+
 int WINAPI
 WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
     (void)hPrevInstance;
     (void)lpCmdLine;
-    (void)nCmdShow;
 
-    const wchar_t* class_name = L"main window class";
+    const wchar_t* window_class_name = L"main window class";
+
     HICON application_icon = LoadIconA(NULL, IDI_APPLICATION);
     WNDCLASSEXW window_class = {
         .cbSize = sizeof(WNDCLASSEXW),
@@ -30,13 +35,41 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdS
         .hIcon = application_icon,
         .hCursor = LoadCursor(NULL, IDC_ARROW),
         .hbrBackground = (HBRUSH)(COLOR_WINDOW + 1),
-        .lpszClassName = class_name,
+        .lpszClassName = window_class_name,
         .hIconSm = application_icon,
     };
 
     if (!RegisterClassExW(&window_class)) {
-        MessageBoxA(NULL, "could not register window class", "error", MB_ICONEXCLAMATION | MB_OK);
+        error_dialog("could not register window class");
         return 1;
+    }
+
+    HWND window_handle = CreateWindowExW(
+        WS_EX_CLIENTEDGE,
+        window_class_name,
+        L"Amigo Oculto",
+        WS_OVERLAPPEDWINDOW,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        800,
+        600,
+        NULL,
+        NULL,
+        hInstance,
+        NULL
+    );
+    if (!window_handle) {
+        error_dialog("could not create window");
+        return 1;
+    }
+
+    ShowWindow(window_handle, nCmdShow);
+    UpdateWindow(window_handle);
+
+    MSG message = {0};
+    while (GetMessageW(&message, NULL, 0, 0) > 0) {
+        TranslateMessage(&message);
+        DispatchMessage(&message);
     }
 
     return 0;
