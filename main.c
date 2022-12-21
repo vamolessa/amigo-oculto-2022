@@ -3,6 +3,7 @@
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <windows.h>
+#include <mmsystem.h>
 
 static void
 error_dialog(const char* error_message) {
@@ -16,9 +17,6 @@ window_proc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
         case WM_CREATE: {
             avatar_bitmap = LoadBitmapA(GetModuleHandle(NULL), "AVATAR_BMP");
-            if (!avatar_bitmap) {
-                error_dialog("could not load avatar bitmap");
-            }
         } break;
         case WM_CLOSE: {
             DestroyWindow(hwnd);
@@ -95,6 +93,8 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdS
 
     ShowWindow(window_handle, nCmdShow);
     UpdateWindow(window_handle);
+
+    PlaySoundA("THEME_WAV", GetModuleHandle(NULL), SND_ASYNC | SND_RESOURCE);
 
     MSG message = {0};
     while (GetMessageW(&message, NULL, 0, 0) > 0) {

@@ -1,1 +1,3 @@
+APP_ICON ICON "icon.ico"
 AVATAR_BMP BITMAP "avatar.bmp"
+THEME_WAV WAVE "theme.wav"
