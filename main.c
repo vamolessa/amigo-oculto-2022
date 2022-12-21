@@ -55,7 +55,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdS
 
     const wchar_t* window_class_name = L"main window class";
 
-    HICON application_icon = LoadIconA(NULL, (const char*)IDI_APPLICATION);
+    HICON application_icon = LoadIconA(GetModuleHandle(NULL), "APP_ICON");
     WNDCLASSEXW window_class = {
         .cbSize = sizeof(WNDCLASSEXW),
         .lpfnWndProc = window_proc,
