@@ -66,6 +66,8 @@ if not defined wsdk_bin_dir (
 
 setlocal EnableDelayedExpansion
 
+"%wsdk_bin_dir%\rc" resources.rc
+
 set INCLUDE=%msvc_tools_dir%\include
 for /d %%d in ("%wsdk_include_dir%\*") do set INCLUDE=!INCLUDE!;%%d
 set LIB=%msvc_tools_dir%\lib\%CL_TARGET%
@@ -76,5 +78,5 @@ endlocal & set INCLUDE=%INCLUDE% & set LIB=%LIB%
 set CL_BIN="%msvc_tools_dir%\bin\HostX64\%CL_TARGET%\cl.exe"
 
 set CLI=%CL_BIN% /nologo /utf-8 /std:c17 /WX /Wall /wd4127 /wd4201 /wd4710 /wd4711 /wd5045
-set CLI=%CLI% main.c /link /SUBSYSTEM:windows user32.lib Gdi32.lib
+set CLI=%CLI% main.c /link /SUBSYSTEM:windows user32.lib Gdi32.lib resources.res
 %CLI%
